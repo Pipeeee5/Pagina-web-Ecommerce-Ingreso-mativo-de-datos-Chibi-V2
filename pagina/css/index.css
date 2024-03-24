@@ -1,0 +1,43 @@
+.carousel {
+    padding: 10px 0;
+    width: 100%; /* Ocupa todo el ancho de la página */
+    margin: 0 auto; /* Centra horizontalmente el carrusel */
+}
+
+.carousel-inner {
+    height: 0;
+    padding-bottom: 50%; /* Proporción 16:9 (divide la altura por el ancho y multiplica por 100) */
+    overflow: hidden;
+}
+
+.carousel-inner img {
+    width: 50%; /* Ajusta el ancho de las imágenes dentro del carrusel */
+    height: 50%; /* Ocupa toda la altura disponible dentro del carrusel */
+    object-fit: cover; /* Ajusta la imagen para que cubra todo el espacio sin distorsionar */
+}
+
+main>.container{
+    padding: 30px 0;
+}
+
+
+.container {
+    margin-top: 20px;
+  }
+  
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .col-md-6 {
+    flex: 0 0 50%;
+    max-width: 50%;
+    padding: 0 15px;
+    box-sizing: border-box;
+  }
+  
+  .product-image {
+    max-width: 100%;
+    height: auto;
+  }
