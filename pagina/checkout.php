@@ -17,7 +17,7 @@ if ($productos != null) {
     }
 }
 
-session_destroy();
+//session_destroy();
 
 //print_r($_SESSION);
 
@@ -91,6 +91,7 @@ session_destroy();
                                 $nombre = $producto['nombre'];
                                 $precio = $producto['precio'];
                                 $descuento = $producto['descuento'];
+                                $cantidad = $producto['cantidad'];
                                 $precio_desc = $precio - (($precio * $descuento) / 100);
                                 $subtotal = $cantidad * $precio_desc;
                                 $total += $subtotal;
@@ -120,10 +121,30 @@ session_destroy();
                                     </td>
                                 </tr>
                             <?php } ?>
+
+                            <tr>
+                                <td colspan="3"> </td>
+                                <td colspan="2"> 
+                                    <p class="h3" id="total"><?php echo MONEDA . number_format($total, 2, ',' , '.'); ?></p>
+                                </td>
+
+                               
+                            </tr>       
+
                         </tbody>
                     <?php } ?>
                 </table>
             </div>
+
+            <div class="row">
+                <div class="col-md-5 offset-md-7 d-grid gap-2">
+                    <button class="btn btn-primary btn-lg">Realizar pago</button>
+                </div>
+             
+                
+            </div>
+
+
         </div>
     </main>
 
@@ -155,6 +176,8 @@ session_destroy();
 
         }
     </script>
+
+    
 
 </body>
 
