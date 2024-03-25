@@ -1,6 +1,6 @@
 .carousel {
     padding: 10px 0;
-    width: 100%; /* Ocupa todo el ancho de la página */
+    width: 70%; /* Ocupa todo el ancho de la página */
     margin: 0 auto; /* Centra horizontalmente el carrusel */
 }
 
