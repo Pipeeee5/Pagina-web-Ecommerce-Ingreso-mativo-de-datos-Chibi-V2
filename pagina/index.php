@@ -32,7 +32,7 @@ $resultado = $sql->fetchAll(PDO::FETCH_ASSOC);
     <header>
         <div class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
-                <a href="#" class="navbar-brand">
+                <a href="nav-link" class="navbar-brand">
                     <strong>ChibiMania</strong>
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
@@ -45,10 +45,10 @@ $resultado = $sql->fetchAll(PDO::FETCH_ASSOC);
                             <a class="nav-link active" aria-current="page" href="#">Catalogo</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="nav-link">Contacto</a>
+                            <a class="nav-link" href="#">Contacto</a>
                         </li>
                     </ul>
-                    <a href="carrito.php" class="btn btn-primary">
+                    <a href="checkout.php" class="btn btn-primary">
                         Carrito<span id="num_cart" class="badge bg-secondary">
                             <?php echo $num_cart; ?>
                         </span>
@@ -135,7 +135,8 @@ $resultado = $sql->fetchAll(PDO::FETCH_ASSOC);
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-        crossorigin="anonymous"></script>
+        crossorigin="anonymous">
+    </script>
 
     <script>
         function addProducto(id, token) {
