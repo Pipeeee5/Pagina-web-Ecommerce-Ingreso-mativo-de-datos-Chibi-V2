@@ -108,9 +108,7 @@ $resultado = $sql->fetchAll(PDO::FETCH_ASSOC);
                                 <h5 class="card-title">
                                     <?php echo $row['nombre']; ?>
                                 </h5>
-                                <p class="card-text">US $
-                                    <?php echo number_format($row['precio'], 2, ',', '.'); ?>
-                                </p>
+                                <p class="card-text">US $<?php echo number_format($row['precio'], 2,',','.');?></p>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <!-- echo hash_hmac esto es una funcion que permite sifrar las claves junto con el TOKEN -->
                                     <div class="btn-group">
@@ -119,12 +117,11 @@ $resultado = $sql->fetchAll(PDO::FETCH_ASSOC);
                                             class="btn btn-primary">detalles</a>
                                     </div>
                                     <button class="btn btn-outline-success" type="button" onclick="addProducto
-                                    (<?php echo $row['id']; ?>, '<?php echo hash_hmac('sha1', $row['id'],
-                                    KEY_TOKEN); ?>')">Agregar al carrito</button>
-                                               
-                                               
-                                              
-                                          
+                                    (<?php echo $row['id']; ?>, '<?php echo hash_hmac(
+                                           'sha1',
+                                           $row['id'],
+                                           KEY_TOKEN
+                                       ); ?>')">Agregar al carrito</button>
                                 </div>
                             </div>
                         </div>
