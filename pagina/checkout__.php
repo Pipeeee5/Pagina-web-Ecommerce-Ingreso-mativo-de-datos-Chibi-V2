@@ -9,7 +9,6 @@
 
     <script
         src="https://www.paypal.com/sdk/js?client-id=AQceuJLPSJyKajP3Af8Vc1JSlfs_8DDhBq0faLjLk-JXhpDqwthrYL-Unzwo_6h7Hb_NCFbS8d2pNY91&currency=USD"></script>
-
 </head>
 
 <body>

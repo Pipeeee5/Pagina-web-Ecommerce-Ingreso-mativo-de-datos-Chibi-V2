@@ -1,0 +1,74 @@
+
+
+{
+    "id": "5P191256E6839000J",
+    "intent": "CAPTURE",
+    "status": "COMPLETED",
+    "purchase_units": [
+        {
+            "reference_id": "default",
+            "amount": {
+                "currency_code": "USD",
+                "value": "65.00"
+            },
+            "payee": {
+                "email_address": "sb-fbmo329869481@business.example.com",
+                "merchant_id": "H2GBQU2DUEX7Y"
+            },
+            "shipping": {
+                "name": {
+                    "full_name": "John Doe"
+                },
+                "address": {
+                    "address_line_1": "Free Trade Zone",
+                    "admin_area_2": "Santiago",
+                    "admin_area_1": "Santiago",
+                    "postal_code": "8150215",
+                    "country_code": "CL"
+                }
+            },
+            "payments": {
+                "captures": [
+                    {
+                        "id": "6AA83623MP304642A",
+                        "status": "COMPLETED",
+                        "amount": {
+                            "currency_code": "USD",
+                            "value": "65.00"
+                        },
+                        "final_capture": true,
+                        "seller_protection": {
+                            "status": "ELIGIBLE",
+                            "dispute_categories": [
+                                "ITEM_NOT_RECEIVED",
+                                "UNAUTHORIZED_TRANSACTION"
+                            ]
+                        },
+                        "create_time": "2024-04-19T22:19:42Z",
+                        "update_time": "2024-04-19T22:19:42Z"
+                    }
+                ]
+            }
+        }
+    ],
+    "payer": {
+        "name": {
+            "given_name": "John",
+            "surname": "Doe"
+        },
+        "email_address": "sb-s6z43w30006254@personal.example.com",
+        "payer_id": "ADGMNTTFAERYJ",
+        "address": {
+            "country_code": "CL"
+        }
+    },
+    "create_time": "2024-04-19T22:19:35Z",
+    "update_time": "2024-04-19T22:19:42Z",
+    "links": [
+        {
+            "href": "https://api.sandbox.paypal.com/v2/checkout/orders/5P191256E6839000J",
+            "rel": "self",
+            "method": "GET"
+        }
+    ]
+}
