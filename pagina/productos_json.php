@@ -33,6 +33,7 @@ $resultado = $sql->fetchAll(PDO::FETCH_ASSOC);
 //  echo ']';
 
  echo json_encode( $resultado );
+ 
  ?>
 
 
