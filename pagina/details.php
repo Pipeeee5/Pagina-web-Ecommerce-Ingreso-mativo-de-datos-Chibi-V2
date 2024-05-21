@@ -128,11 +128,16 @@ if ($id == '' || $token == '') {
                     <p class="lead">
                         <?PHP echo $descripcion; ?>
                     </p>
+                    <div class="col-3 my-3">
+                        Cantidad: <input class="form-control" id="cantidad" name="cantidad" 
+                        type="number" min="1" max="10" value="1">
+
+                    </div>
 
                     <div class="d-grid gap-3 col-10 mx-auto">
                         <button class="btn btn-primary" type="button">Comprar ahora</button>
                         <button class="btn btn-outline-primary" type="button"
-                            onclick="addProducto(<?php echo $id; ?>, '<?php echo $token_tmp; ?>')">Agregar al
+                            onclick="addProducto(<?php echo $id; ?>, cantidad.value, '<?php echo $token_tmp; ?>')">Agregar al
                             carrito</button>
                     </div>
                 </div>
@@ -148,12 +153,14 @@ if ($id == '' || $token == '') {
 
     <!-- funcion javaScript Api Fetch  -->
     <script>
-        function addProducto(id, token) {
+
+        function addProducto(id, cantidad, token) {
             let url = 'clases/carrito.php'
             // se envian parametros a traves de POST
             //una Mayuscula hace la diferencia xd
             let formData = new FormData()
             formData.append('id', id)
+            formData.append('cantidad', cantidad)
             formData.append('token', token)
 
             //se envian eventos de fetch
