@@ -50,6 +50,9 @@ $resultado = $sql->fetchAll(PDO::FETCH_ASSOC);
                         <li class="nav-item">
                             <a class="nav-link" href="#">Contacto</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="registro.php">Crear cuenta</a>
+                        </li>
                     </ul>
                     <a href="checkout.php" class="btn btn-primary">
                         Carrito<span id="num_cart" class="badge bg-secondary">
