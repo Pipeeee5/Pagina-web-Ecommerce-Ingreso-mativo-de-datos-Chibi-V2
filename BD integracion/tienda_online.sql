@@ -91,7 +91,7 @@ CREATE TABLE `productos` (
   `precio` decimal(10,2) NOT NULL,
   `descuento` tinyint(3) NOT NULL DEFAULT 0,
   `id_categoria` int(11) NOT NULL,
-  `activo` int(11) NOT NULL
+  `activo` TINYINT(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
