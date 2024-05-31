@@ -70,7 +70,7 @@ if ($id == '' || $token == '') {
     <header>
         <div class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
-                <a href="nav-link" class="navbar-brand">
+                <a href="index.php" class="navbar-brand">
                     <strong>ChibiMania</strong>
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
