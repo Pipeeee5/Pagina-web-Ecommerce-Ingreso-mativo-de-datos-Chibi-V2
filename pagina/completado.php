@@ -4,36 +4,21 @@ require 'config/database.php';
 $db = new Database();
 $con = $db->conectar();
 
-$id_transaccion = isset($_GET['key']) ? $_GET['key'] : '0';
+$sql = $con->prepare("SELECT id, nombre, precio FROM productos WHERE activo=1");
+$sql->execute();
+$resultado = $sql->fetchAll(PDO::FETCH_ASSOC);
 
-$error = '';
-if($id_transaccion == '') {
-    $error= 'Error al procesar la petición';
-} else {
-    $sql = $con->prepare("SELECT count(id) FROM compra WHERE id_transaccion=? AND status=?");
-    $sql->execute([$id_transaccion, 'COMPLETED']);
-    if ($sql->fetchColumn() > 0) {
-
-        $sql = $con->prepare("SELECT id, fecha, email, total FROM compra WHERE id_transaccion=? AND status=?
-         LIMIT 1");
-        $sql->execute([$id_transaccion, 'COMPLETED']);
-        $row = $sql->fetch(PDO::FETCH_ASSOC);
-
-        $idCompra = $row['id'];
-        $total = $row['total'];
-        $fecha = $row['fecha'];
-
-        $sqlDet = $con->prepare('SELECT nombre , precio, cantidad FROM detalle_compra WHERE id_compra=?');
-        $sqlDet->execute([$idCompra]);
-    } else {
-        $error = 'Error al comprobar la venta';
-    }
+// Verificar si se requiere el JSON
+if (isset($_GET['json']) && $_GET['json'] == 'true') {
+    header('Content-Type: application/json');
+    echo json_encode($resultado);
+    exit;
 }
-
 ?>
 
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -42,8 +27,9 @@ if($id_transaccion == '') {
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="css/index.css">
 </head>
+
 <body>
-<header>
+    <header>
         <div class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
                 <a href="index.php" class="navbar-brand">
@@ -61,6 +47,9 @@ if($id_transaccion == '') {
                         <li class="nav-item">
                             <a class="nav-link" href="#">Contacto</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="registro.php">Crear cuenta</a>
+                        </li>
                     </ul>
                     <a href="checkout.php" class="btn btn-primary">
                         Carrito<span id="num_cart" class="badge bg-secondary">
@@ -71,49 +60,102 @@ if($id_transaccion == '') {
             </div>
         </div>
     </header>
+    
+    <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="images/kimetus.png" class="d-block w-100" alt="Imagen 1">
+            </div>
+            <div class="carousel-item">
+                <img src="images/dragon.png" class="d-block w-100" alt="Imagen 2">
+            </div>
+            <div class="carousel-item">
+                <img src="images/onepiece.jpg" class="d-block w-100" alt="Imagen 3">
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $('.carousel').carousel({
+                interval: 3000, // Cambia la imagen cada 3 segundos (3000 milisegundos)
+                pause: 'hover' // Pausa el carrusel cuando el cursor está sobre él
+            });
+        });
+
+        // Solicitar el JSON al cargar la página
+        fetch('index.php?json=true')
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+            })
+            .catch(error => console.error('Error fetching JSON:', error));
+    </script>
+
     <main>
         <div class="container">
-            <?php if(strlen($error) > 0) {?>
-                <div class="row">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                <?php foreach ($resultado as $row) { ?>
                     <div class="col">
-                        <h3> <?php echo $error; ?> </h3>
+                        <div class="card shadow-sm">
+                            <?php
+                            $id = $row['id'];
+                            $imagen = "images/productos/" . $id . "/principal.png";
+
+                            if (!file_exists($imagen)) {
+                                $imagen = "images/no-photo.png";
+                            }
+                            ?>
+                            <img src="<?php echo $imagen; ?>">
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <?php echo $row['nombre']; ?>
+                                </h5>
+                                <p class="card-text">US $<?php echo number_format($row['precio'], 2, ',', '.'); ?></p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <a href="details.php?id=<?php echo $row['id']; ?>&token=<?php echo hash_hmac('sha1', $row['id'], KEY_TOKEN); ?>" class="btn btn-primary">detalles</a>
+                                    </div>
+                                    <button class="btn btn-outline-success" type="button" onclick="addProducto(<?php echo $row['id']; ?>, '<?php echo hash_hmac('sha1', $row['id'], KEY_TOKEN); ?>')">Agregar al carrito</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-           <?php } else { ?>
-
-            <div class="row">
-                <div class="col">
-                    <b>Folio de la compra: </b><?php echo $id_transaccion; ?><br>
-                    <b>Fecha de compra: </b><?php echo $fecha; ?><br>
-                    <b>Total: </b><?php echo MONEDA . number_format($total, 2, ',', '.'); ?><br>
-                </div>
+                <?php } ?>
             </div>
-
-            <div class="row">
-                <div class="col">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Cantidad</th>
-                                <th>Producto</th>
-                                <th>Importe</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php while($row_det = $sqlDet->fetch(PDO::FETCH_ASSOC)){
-                                $importe = $row_det['precio'] * $row_det['cantidad']; ?>
-                                <tr>
-                                    <td><?php echo $row_det['cantidad']; ?></td>
-                                    <td><?php echo $row_det['nombre']; ?></td>
-                                    <td><?php echo $importe; ?></td>
-                                </tr>
-                            <?php } ?>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        <?php } ?>
         </div>
     </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+    <script>
+        function addProducto(id, token) {
+            let url = 'clases/carrito.php'
+            let formData = new FormData()
+            formData.append('id', id)
+            formData.append('token', token)
+
+            fetch(url, {
+                method: 'POST',
+                body: formData,
+                mode: 'cors'
+            }).then(response => response.json())
+                .then(data => {
+                    if (data.ok) {
+                        let elemento = document.getElementById("num_cart")
+                        elemento.innerHTML = data.numero
+                    }
+                })
+        }
+    </script>
+
 </body>
+
 </html>

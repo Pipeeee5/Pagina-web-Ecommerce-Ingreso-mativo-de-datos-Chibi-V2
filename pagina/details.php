@@ -150,9 +150,22 @@ if ($id == '' || $token == '') {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    <!-- funcion javaScript Api Fetch  -->
     <script>
+        $(document).ready(function () {
+            $.ajax({
+                url: 'details_json.php',
+                method: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data);
+                },
+                error: function (error) {
+                    console.error('Error al obtener el JSON:', error);
+                }
+            });
+        });
 
         function addProducto(id, cantidad, token) {
             let url = 'clases/carrito.php'

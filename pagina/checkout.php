@@ -32,7 +32,8 @@ if ($productos != null) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tienda online</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="css/index.css">
 </head>
 
@@ -43,7 +44,8 @@ if ($productos != null) {
                 <a href="index.php" class="navbar-brand">
                     <strong>ChibiMania</strong>
                 </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+                    aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -93,7 +95,7 @@ if ($productos != null) {
                                 $precio_desc = $precio - (($precio * $descuento) / 100);
                                 $subtotal = $cantidad * $precio_desc;
                                 $total += $subtotal;
-                        ?>
+                                ?>
 
                                 <tr>
                                     <td>
@@ -103,7 +105,9 @@ if ($productos != null) {
                                         <?php echo MONEDA . number_format($precio_desc, 2, ',', '.'); ?>
                                     </td>
                                     <td>
-                                        <input type="number" min="1" max="10" setp="1" value="<?php echo $cantidad ?>" size="5" id="cantidad_<?php echo $_id; ?>" onchange="actualizaCantidad(this.value, <?php echo $_id; ?>)">
+                                        <input type="number" min="1" max="10" setp="1" value="<?php echo $cantidad ?>" size="5"
+                                            id="cantidad_<?php echo $_id; ?>"
+                                            onchange="actualizaCantidad(this.value, <?php echo $_id; ?>)">
                                     </td>
                                     <td>
                                         <div id="subtotal_<?php echo $_id; ?>" name="subtotal[]">
@@ -112,7 +116,9 @@ if ($productos != null) {
                                         </div>
                                     </td>
                                     <td style="text-align: left-center;">
-                                        <a href="#" id="eliminar" class="btn btn-warning btn-sm" data-bs-id="<?php echo $_id; ?>" data-bs-toggle="modal" data-bs-target="#eliminaModal">Eliminar</a>
+                                        <a href="#" id="eliminar" class="btn btn-warning btn-sm"
+                                            data-bs-id="<?php echo $_id; ?>" data-bs-toggle="modal"
+                                            data-bs-target="#eliminaModal">Eliminar</a>
                                     </td>
                                 </tr>
                             <?php } ?>
@@ -128,17 +134,17 @@ if ($productos != null) {
 
                             </tr>
 
-                    </tbody>
-                <?php } ?>
+                        </tbody>
+                    <?php } ?>
                 </table>
             </div>
             <?php if ($lista_carrito != null) { ?>
-            <div class="row">
-                <div class="col-md-5 offset-md-7 d-grid gap-2">
-                    <a href="pagos.php" class="btn btn-primary btn-lg">Realizar pago</a>
+                <div class="row">
+                    <div class="col-md-5 offset-md-7 d-grid gap-2">
+                        <a href="pagos.php" class="btn btn-primary btn-lg">Realizar pago</a>
+                    </div>
                 </div>
-            </div>
-            <?php }?>
+            <?php } ?>
 
 
         </div>
@@ -161,18 +167,18 @@ if ($productos != null) {
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" 
-    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" 
-    crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
 
     <script>
         let eliminaModal = document.getElementById('eliminaModal')
-        eliminaModal.addEventListener('show.bs.modal',function(event) {
+        eliminaModal.addEventListener('show.bs.modal', function (event) {
             let button = event.relatedTarget
             let id = button.getAttribute('data-bs-id')
             let buttonElimina = eliminaModal.querySelector('.modal-footer #btn-elimina')
             buttonElimina.value = id
-            })
+        })
 
 
         function actualizaCantidad(cantidad, id) {
@@ -186,10 +192,10 @@ if ($productos != null) {
 
             //se envian eventos de fetch
             fetch(url, {
-                    method: 'POST',
-                    body: formData,
-                    mode: 'cors'
-                }).then(response => response.json())
+                method: 'POST',
+                body: formData,
+                mode: 'cors'
+            }).then(response => response.json())
                 .then(data => {
                     if (data.ok) {
 
@@ -229,10 +235,10 @@ if ($productos != null) {
 
             //se envian eventos de fetch
             fetch(url, {
-                    method: 'POST',
-                    body: formData,
-                    mode: 'cors'
-                }).then(response => response.json())
+                method: 'POST',
+                body: formData,
+                mode: 'cors'
+            }).then(response => response.json())
                 .then(data => {
                     if (data.ok) {
                         location.reload()
@@ -244,8 +250,25 @@ if ($productos != null) {
         }
     </script>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                url: 'carrito_json.php',
+                method: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data);
+                },
+                error: function (error) {
+                    console.error('Error al obtener el JSON:', error);
+                }
+            });
+        });
+    </script>
 
 
-</body>
 
-</html>
+</body >
+
+</html >

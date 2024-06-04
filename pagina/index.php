@@ -7,30 +7,18 @@ $con = $db->conectar();
 $sql = $con->prepare("SELECT id, nombre, precio FROM productos WHERE activo=1");
 $sql->execute();
 $resultado = $sql->fetchAll(PDO::FETCH_ASSOC);
-
-
-//session_destroy();
-
-//print_r($_SESSION);
-
-
-
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tienda online</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="css/index.css">
 </head>
-
 <body>
     <header>
         <div class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -39,7 +27,7 @@ $resultado = $sql->fetchAll(PDO::FETCH_ASSOC);
                     <strong>ChibiMania</strong>
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
-                    aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                        aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -97,8 +85,6 @@ $resultado = $sql->fetchAll(PDO::FETCH_ASSOC);
     <main>
         <div class="container">
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                <!-- esto toma las filas de la base de datos en esta caso mysql y hace el proceso automatico pero tienes que descargar imagenes y guardarla en el numero del producto
-            y llamarla de la misma foma que en la funcion $imagen= principal.png -->
                 <?php foreach ($resultado as $row) { ?>
                     <div class="col">
                         <div class="card shadow-sm">
@@ -115,20 +101,19 @@ $resultado = $sql->fetchAll(PDO::FETCH_ASSOC);
                                 <h5 class="card-title">
                                     <?php echo $row['nombre']; ?>
                                 </h5>
-                                <p class="card-text">US $<?php echo number_format($row['precio'], 2,',','.');?></p>
+                                <p class="card-text">US $<?php echo number_format($row['precio'], 2, ',', '.'); ?></p>
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <!-- echo hash_hmac esto es una funcion que permite sifrar las claves junto con el TOKEN -->
                                     <div class="btn-group">
                                         <a href="details.php?id=<?php echo $row['id']; ?>&token=<?php
-                                           echo hash_hmac('sha1', $row['id'], KEY_TOKEN); ?>"
-                                            class="btn btn-primary">detalles</a>
+                                        echo hash_hmac('sha1', $row['id'], KEY_TOKEN); ?>"
+                                           class="btn btn-primary">detalles</a>
                                     </div>
                                     <button class="btn btn-outline-success" type="button" onclick="addProducto
                                     (<?php echo $row['id']; ?>, '<?php echo hash_hmac(
-                                           'sha1',
-                                           $row['id'],
-                                           KEY_TOKEN
-                                       ); ?>')">Agregar al carrito</button>
+                                        'sha1',
+                                        $row['id'],
+                                        KEY_TOKEN
+                                    ); ?>')">Agregar al carrito</button>
                                 </div>
                             </div>
                         </div>
@@ -138,23 +123,31 @@ $resultado = $sql->fetchAll(PDO::FETCH_ASSOC);
         </div>
     </main>
 
-
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-        crossorigin="anonymous">
-    </script>
-
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+            crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
+        $(document).ready(function () {
+            $.ajax({
+                url: 'productos_json.php',
+                method: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data);
+                },
+                error: function (error) {
+                    console.error('Error al obtener el JSON:', error);
+                }
+            });
+        });
+
         function addProducto(id, token) {
             let url = 'clases/carrito.php'
-            // se envian parametros a traves de POST
-            //una Mayuscula hace la diferencia xd
             let formData = new FormData()
             formData.append('id', id)
             formData.append('token', token)
 
-            //se envian eventos de fetch
             fetch(url, {
                 method: 'POST',
                 body: formData,
@@ -166,10 +159,7 @@ $resultado = $sql->fetchAll(PDO::FETCH_ASSOC);
                         elemento.innerHTML = data.numero
                     }
                 })
-
         }
     </script>
-
 </body>
-
 </html>
