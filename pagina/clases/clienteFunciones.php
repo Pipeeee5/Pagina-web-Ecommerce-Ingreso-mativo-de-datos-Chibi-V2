@@ -109,6 +109,16 @@ function emailExiste($email, $con)
     return false;
 }
 
+// function rutExiste($rut, $con)
+// {
+//     $sql = $con->prepare("SELECT id FROM clientes WHERE rut LIKE ? LIMIT 1");
+//     $sql->execute([$rut]);
+//     if ($sql->fetchColumn() > 0) {
+//         return true;
+//     }
+//     return false;
+// }
+
 function mostrarMensajes(array $errors){
     if(count($errors) > 0){
         echo '<div class="alert alert-warning alert-dismissible fade show" role="alert"><ul>';

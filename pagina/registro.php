@@ -75,7 +75,7 @@ if (!empty($_POST)) {
     <header>
         <div class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
-                <a href="nav-link" class="navbar-brand">
+                <a href="index.php" class="navbar-brand">
                     <strong>ChibiMania</strong>
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
@@ -85,7 +85,7 @@ if (!empty($_POST)) {
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <ul class="navbar-nav me-auto mb-2 mb-md-0">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Catalogo</a>
+                            <a class="nav-link" aria-current="page" href="#">Catalogo</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Contacto</a>
@@ -120,6 +120,7 @@ if (!empty($_POST)) {
                 <div class="col-md-6">
                     <label for="email"><span class="text-danger">*</span> Correo electronico</label>
                     <input type="email" name="email" id="email" class="form-control" required>
+                    <span id="validaEmail" class="text-danger"></span>
                 </div>
                 <div class="col-md-6">
                     <label for="telefono"><span class="text-danger">*</span> Telefono</label>
@@ -132,6 +133,7 @@ if (!empty($_POST)) {
                 <div class="col-md-6">
                     <label for="usuario"><span class="text-danger">*</span> usuario</label>
                     <input type="text" name="usuario" id="usuario" class="form-control" required>
+                    <span id="validaUsuario" class="text-danger"></span>
                 </div>
                 <div class="col-md-6">
                     <label for="password"><span class="text-danger">*</span> Contraseña</label>
@@ -155,6 +157,93 @@ if (!empty($_POST)) {
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
         </script>
 
+    <!-- script para peticion ajax -->
+    <script>
+        let txtUsuario = document.getElementById('usuario')
+        txtUsuario.addEventListener("blur", function () {
+            existeUsuario(txtUsuario.value)
+        }, false)
+
+        let txtEmail = document.getElementById('email')
+        txtEmail.addEventListener("blur", function () {
+            existeEmail(txtEmail.value)
+        }, false)
+
+        // let txtRut = document.getElementById('rut')
+        // txtRut.addEventListener("blur", function () {
+        //     existeRut(txtRut.value)
+        // }, false)
+
+        // funcion usuario
+        function existeUsuario(usuario) {
+            let url = "clases/cliente_ajax.php"
+            let formData = new FormData()
+            formData.append("action", "existeUsuario")
+            formData.append("usuario", usuario)
+
+            fetch(url, {
+                method: 'POST',
+                body: formData
+            }).then(response => response.json())
+                .then(data => {
+
+                    if (data.ok) {
+                        document.getElementById('usuario').value = ''
+                        document.getElementById('validaUsuario').innerHTML = 'Usuario no disponible'
+                    } else {
+                        document.getElementById('validaUsuario').innerHTML = ''
+                    }
+
+                })
+        }
+
+        // funcion email
+        function existeEmail(email) {
+            let url = "clases/cliente_ajax.php"
+            let formData = new FormData()
+            formData.append("action", "existeEmail")
+            formData.append("email", email)
+
+            fetch(url, {
+                method: 'POST',
+                body: formData
+            }).then(response => response.json())
+                .then(data => {
+
+                    if (data.ok) {
+                        document.getElementById('email').value = ''
+                        document.getElementById('validaEmail').innerHTML = 'El email ingresado ya esta regristado'
+                    } else {
+                        document.getElementById('validaEmail').innerHTML = ''
+                    }
+
+                })
+        }
+
+        // funcion rut
+        // function existeRut(rut) {
+        //     let url = "clases/cliente_ajax.php"
+        //     let formData = new FormData()
+        //     formData.append("action", "existeRut")
+        //     formData.append("rut", rut)
+
+        //     fetch(url, {
+        //         method: 'POST',
+        //         body: formData
+        //     }).then(response => response.json())
+        //         .then(data => {
+
+        //             if (data.ok) {
+        //                 document.getElementById('rut').value = ''
+        //                 document.getElementById('validaRut').innerHTML = 'El rut ya esta'
+        //             } else {
+        //                 document.getElementById('validaRut').innerHTML = ''
+        //             }
+
+        //         })
+        // }
+
+    </script>
 </body>
 
 </html>
