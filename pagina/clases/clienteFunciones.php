@@ -28,7 +28,7 @@ function validaPasword($password, $repassword)
 
 }
 
-function isValidRUT($rut) {
+function validaRut($rut) {
     // Formato: debe tener 7 u 8 dígitos, guion y un dígito verificador (0-9 o k)
     if (!preg_match('/^\d{7,8}-[0-9kK]{1}$/', $rut)) {
         return false;
@@ -109,15 +109,15 @@ function emailExiste($email, $con)
     return false;
 }
 
-// function rutExiste($rut, $con)
-// {
-//     $sql = $con->prepare("SELECT id FROM clientes WHERE rut LIKE ? LIMIT 1");
-//     $sql->execute([$rut]);
-//     if ($sql->fetchColumn() > 0) {
-//         return true;
-//     }
-//     return false;
-// }
+function rutExiste($rut, $con)
+{
+    $sql = $con->prepare("SELECT id FROM clientes WHERE rut LIKE ? LIMIT 1");
+    $sql->execute([$rut]);
+    if ($sql->fetchColumn() > 0) {
+        return true;
+    }
+    return false;
+}
 
 function mostrarMensajes(array $errors){
     if(count($errors) > 0){

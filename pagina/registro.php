@@ -38,7 +38,7 @@ if (!empty($_POST)) {
         $errors[] = "El correo electronico $email ya existe";
     }
 
-    if (isValidRUT($rut)) {
+    if (rutExiste($rut, $con)) {
         $errors[] = "El rut ingresado $rut ya existe";
     }
 
@@ -129,6 +129,7 @@ if (!empty($_POST)) {
                 <div class="col-md-6">
                     <label for="rut"><span class="text-danger">*</span> Rut</label>
                     <input type="text" name="rut" id="rut" class="form-control" required>
+                    <span id="validaRut" class="text-danger"></span>
                 </div>
                 <div class="col-md-6">
                     <label for="usuario"><span class="text-danger">*</span> usuario</label>
@@ -169,10 +170,10 @@ if (!empty($_POST)) {
             existeEmail(txtEmail.value)
         }, false)
 
-        // let txtRut = document.getElementById('rut')
-        // txtRut.addEventListener("blur", function () {
-        //     existeRut(txtRut.value)
-        // }, false)
+        let txtRut = document.getElementById('rut')
+        txtRut.addEventListener("blur", function () {
+            existeRut(txtRut.value)
+        }, false)
 
         // funcion usuario
         function existeUsuario(usuario) {
@@ -221,27 +222,27 @@ if (!empty($_POST)) {
         }
 
         // funcion rut
-        // function existeRut(rut) {
-        //     let url = "clases/cliente_ajax.php"
-        //     let formData = new FormData()
-        //     formData.append("action", "existeRut")
-        //     formData.append("rut", rut)
+        function existeRut(rut) {
+            let url = "clases/cliente_ajax.php"
+            let formData = new FormData()
+            formData.append("action", "existeRut")
+            formData.append("rut", rut)
 
-        //     fetch(url, {
-        //         method: 'POST',
-        //         body: formData
-        //     }).then(response => response.json())
-        //         .then(data => {
+            fetch(url, {
+                method: 'POST',
+                body: formData
+            }).then(response => response.json())
+                .then(data => {
 
-        //             if (data.ok) {
-        //                 document.getElementById('rut').value = ''
-        //                 document.getElementById('validaRut').innerHTML = 'El rut ya esta'
-        //             } else {
-        //                 document.getElementById('validaRut').innerHTML = ''
-        //             }
+                    if (data.ok) {
+                        document.getElementById('rut').value = ''
+                        document.getElementById('validaRut').innerHTML = 'El rut ya esta registrado'
+                    } else {
+                        document.getElementById('validaRut').innerHTML = ''
+                    }
 
-        //         })
-        // }
+                })
+        }
 
     </script>
 </body>
