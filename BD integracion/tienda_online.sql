@@ -102,7 +102,10 @@ INSERT INTO `productos` (`id`, `nombre`, `descripcion`, `precio`, `descuento`, `
 (1, 'One Piece Volumen 3.', 'El capitán Buggy \"El payaso\" y Luffy, tienen una espectacular pelea como solo podría suceder con dos poseedores de las habilidades de las frutas del diablo. Durante la pelea aprendemos más del pasado en común de Shanks y Buggy. Ahora que Nami y Zoro se han unido a la tripulación de Luffy es momento de continuar su camino hacia la \"Grand Line\". Han desembarcado en una villa para buscar un barco más resistente y algo de comida. Ahí se encuentran con el orgulloso pero mentiroso Usopp y es gracias a él que conocen a Kaya, la persona más rica de la villa, a quien le piden un barco. Sin embargo, el mayordomo Kurahadol se entromete y Luffy tiene que renunciar trágicamente a su petición.', 30.00, 10, 1, 1),
 (2, 'Jujutsu Volumen 1.', 'jujutsu volumen 1', 30.00, 0, 1, 1),
 (3, 'Dragon Ball super Volumen 1.', 'Dragon Ball super Volumen 1.', 35.00, 0, 1, 1),
-(4, 'Kimetsu No Yaiba Volumen 1.', 'Kimetsu No Yaiba Volumen 1.', 20.00, 0, 1, 1);
+(4, 'Kimetsu No Yaiba Volumen 1.', 'Kimetsu No Yaiba Volumen 1.', 20.00, 0, 1, 1),
+(5, 'Boku No Kokoro vol 1.', 'Boko No Kokoro vol1.\r\nIchikawa Kyotaro es un joven tímido en el escalafón final de los grupos sociales del instituto, pero cree que protagoniza un tortuoso thriller psicológico en su vida diaria. Se pasa los días pensando en como interrumpir las apacibles vidas de sus compañeros y en cortejar a Anna Yamada, la idol de la clase.', 20.00, 5, 1, 1),
+(6, 'Shingeki No Kyojin Volumen 1.', 'Shingeki no Kyojin (進撃の巨人? «Titán de ataque»), también conocida en países de habla hispana como Ataque a los titanes y Ataque de los titanes,2​n. 2​ es una serie de manga japonesa escrita e ilustrada por Hajime Isayama. El manga se publicó en septiembre de 2009 en la revista Bessatsu Shōnen Magazine de la editorial Kōdansha y fue difundida de forma mensual hasta abril de 2021 con un total de 139 capítulos. Su historia terminó después de casi doce años. En España, el manga es distribuido por Norma Editorial y en Hispanoamérica por la editorial Panini; salvo en Argentina, donde la encargada es la editorial Ovni Press.', 30.00, 0, 1, 1);
+
 
 -- --------------------------------------------------------
 
