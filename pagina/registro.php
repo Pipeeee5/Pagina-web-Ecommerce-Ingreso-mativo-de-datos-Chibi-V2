@@ -46,9 +46,30 @@ if (!empty($_POST)) {
 
         $id = registraCliente([$nombres, $apellidos, $email, $telefono, $rut], $con);
         if ($id > 0) {
-            $pass_hash = password_hash($password, PASSWORD_DEFAULT);
+
+            require 'clases/Mailer.php';
+            $mailer = new Mailer();
             $token = generarToken();
-            if (!registraUsuario([$usuario, $pass_hash, $token, $id], $con)) {
+            $pass_hash = password_hash($password, PASSWORD_DEFAULT);
+
+
+            $idUsuario = registraUsuario([$usuario, $pass_hash, $token, $id], $con);
+            if ($idUsuario > 0) {
+
+                $url = SITE_URL . '/activa_cliente.php?id=' . $idUsuario . '&token=' . $token;
+                $asunto = "Activar cuenta - Chibi Mania";
+                $cuerpo = "Estimado $nombres: <br> Para continuar con el proceso de registro es indespensable 
+                que active su cuenta porfavor de click en la siguiente liga
+                 <a href='$url'> Activar cuenta</a>";
+
+
+                if ($mailer->enviarEmail($email, $asunto, $cuerpo)) {
+                    echo "para terminar el proceso de registro siga las instrucciones que le hemos enviado
+                    al correo electronico: $email";
+
+                    exit;
+                }
+            } else {
                 $errors[] = "Error al registrar usuario";
             }
         } else {
