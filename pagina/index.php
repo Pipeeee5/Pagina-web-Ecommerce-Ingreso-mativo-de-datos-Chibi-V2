@@ -7,18 +7,25 @@ $con = $db->conectar();
 $sql = $con->prepare("SELECT id, nombre, precio FROM productos WHERE activo=1");
 $sql->execute();
 $resultado = $sql->fetchAll(PDO::FETCH_ASSOC);
+
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tienda online</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+        integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
+
 <body>
     <header>
         <div class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -27,7 +34,7 @@ $resultado = $sql->fetchAll(PDO::FETCH_ASSOC);
                     <strong>ChibiMania</strong>
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
-                        aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                    aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -38,20 +45,26 @@ $resultado = $sql->fetchAll(PDO::FETCH_ASSOC);
                         <li class="nav-item">
                             <a class="nav-link" href="#">Contacto</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="registro.php">Crear cuenta</a>
-                        </li>
                     </ul>
-                    <a href="checkout.php" class="btn btn-primary">
+                    <a href="checkout.php" class="btn btn-primary me-2"><i class="fas fa-shopping-cart"></i> 
                         Carrito<span id="num_cart" class="badge bg-secondary">
                             <?php echo $num_cart; ?>
                         </span>
-                    </a>
+
+                    <?php if(isset($_SESSION['user_id'])) { ?>
+                        <a href="#" class="btn btn-success"><i class="fas fa-user"></i> <?php echo $_SESSION['user_name']; ?></a>
+                       
+                    <?php } else { ?>
+                        <a href="login.php" class="btn btn-success"><i class="fas fa-user"></i>Ingresar </a>
+
+                    <?php } ?>
+                    
+
                 </div>
             </div>
         </div>
     </header>
-    
+
     <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
             <div class="carousel-item active">
@@ -105,15 +118,15 @@ $resultado = $sql->fetchAll(PDO::FETCH_ASSOC);
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
                                         <a href="details.php?id=<?php echo $row['id']; ?>&token=<?php
-                                        echo hash_hmac('sha1', $row['id'], KEY_TOKEN); ?>"
-                                           class="btn btn-primary">detalles</a>
+                                           echo hash_hmac('sha1', $row['id'], KEY_TOKEN); ?>"
+                                            class="btn btn-primary">detalles</a>
                                     </div>
                                     <button class="btn btn-outline-success ml-auto" type="button" onclick="addProducto
                                     (<?php echo $row['id']; ?>, '<?php echo hash_hmac(
-                                        'sha1',
-                                        $row['id'],
-                                        KEY_TOKEN
-                                    ); ?>')">Agregar al carrito</button>
+                                           'sha1',
+                                           $row['id'],
+                                           KEY_TOKEN
+                                       ); ?>')">Agregar al carrito</button>
                                 </div>
                             </div>
                         </div>
@@ -124,8 +137,8 @@ $resultado = $sql->fetchAll(PDO::FETCH_ASSOC);
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-            crossorigin="anonymous"></script>
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function () {
@@ -162,4 +175,5 @@ $resultado = $sql->fetchAll(PDO::FETCH_ASSOC);
         }
     </script>
 </body>
+
 </html>
