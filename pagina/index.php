@@ -50,7 +50,8 @@ $resultado = $sql->fetchAll(PDO::FETCH_ASSOC);
                         Carrito<span id="num_cart" class="badge bg-secondary">
                             <?php echo $num_cart; ?>
                         </span>
-
+                        
+                    <!-- validacion modo incognito -->
                     <?php if(isset($_SESSION['user_id'])) { ?>
                         <a href="#" class="btn btn-success"><i class="fas fa-user"></i> <?php echo $_SESSION['user_name']; ?></a>
                        
