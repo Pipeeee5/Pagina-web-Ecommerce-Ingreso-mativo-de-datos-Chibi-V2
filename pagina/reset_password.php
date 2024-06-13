@@ -1,30 +1,51 @@
-<!-- Pantalla login -->
-
 <?php
 require 'config/config.php';
 require 'config/database.php';
 require 'clases/clienteFunciones.php';
+
+$user_id = $_GET['id'] ?? $_POST['user_id'] ?? '';
+$token = $_GET['token'] ?? $_POST['token'] ?? '';
+
+if($user_id == '' || $token == ''){
+    header("Location: index.php");
+    exit;
+}
 
 $db = new Database();
 $con = $db->conectar();
 
 $errors = [];
 
+if(!verificaTokenRequest($user_id, $token, $con)){
+    echo "No se pudo verificar la información";
+    echo "<br><br>Pincha este link para volver a la pagina principal: <a href='index.php'>  <b>Página Principal</b></a>";
+    exit;
+}
+
 if (!empty($_POST)) {
 
-    $usuario = trim($_POST['usuario']);
     $password = trim($_POST['password']);
+    $repassword = trim($_POST['repassword']);
 
-
-    if (esNulo([$usuario, $password])) {
+    if (esNulo([$user_id, $token, $password, $repassword])) {
         $errors[] = "Debe llenar todos los campos";
     }
 
-    if (count($errors) == 0) {
-        $errors[] = login($usuario, $password, $con);
+    if (!validaPasword($password, $repassword)) {
+        $errors[] = "Las contraseñas no coiciden";
     }
-}
 
+    if (count($errors) ==0){
+        $pass_hash = password_hash($password, PASSWORD_DEFAULT);
+        if(actualizaPassword($user_id, $pass_hash, $con)){
+            echo "Contraseña modificada con exito.<br><a href='login.php'><b>Iniciar Sesión</b></a>";
+            exit;
+        } else {
+            $errors[] = "Error al modificar contraseña, intentalo nuevamente :)";
+        }
+    }
+
+}
 
 
 ?>
@@ -64,7 +85,7 @@ if (!empty($_POST)) {
                             <a class="nav-link" href="#">Contacto</a>
                         </li>
                     </ul>
-                    <a href="checkout.php" class="btn btn-primary"><i class="fas fa-shopping-cart"></i>
+                    <a href="checkout.php" class="btn btn-primary"><i class="fas fa-shopping-cart"></i> 
                         Carrito<span id="num_cart" class="badge bg-secondary">
                             <?php echo $num_cart; ?>
                         </span>
@@ -74,48 +95,48 @@ if (!empty($_POST)) {
         </div>
     </header>
 
+    <!-- formulario -->
 
     <main class="form-login m-auto pt-4">
-        <h2>Iniciar sesión</h2>
+        <h3>Cambiar contraseña</h3>
 
         <?php mostrarMensajes($errors); ?>
-        <form class="row g-3" action="login.php" method="post" autocomplete="off">
+
+        <form action="reset_password.php" method="post" class="row g-3" autocomplete="off">
+        
+        <input type="hidden" name="user_id" id="user_id" value="<?= $user_id; ?>" />
+        <input type="hidden" name="token" id="token" value="<?= $token; ?>" />
 
             <div class="form-floating">
-                <input class="form-control" type="text" name="usuario" id="usuario" placeholder="Usuario" required>
-                <label for="usuario">Usuario</label>
-            </div>
-
-            <div class="form-floating">
-                <input class="form-control" type="password" name="password" id="password" placeholder="Contraseña"
+                <input class="form-control" type="password" name="password" id="password" placeholder="Nueva Contraseña"
                     required>
-                <label for="password">Contraseña</label>
+                <label for="password">Nueva Contraseña</label>
             </div>
 
-            <div class="col-12">
-                <a href="recuperar_pw.php">¿Olvidaste tu contraseña?</a>
+            <div class="form-floating">
+                <input class="form-control" type="password" name="repassword" id="repassword" placeholder="Confirmar Contraseña"
+                    required>
+                <label for="repassword">Confirmar Contraseña</label>
             </div>
 
             <div class="d-grid gap-3 col-12">
-                <button typpe="submit" class="btn btn-primary">Ingresar</button>
+                <button typpe="submit" class="btn btn-primary">Continuar</button>
             </div>
-
-            <hr>
 
             <div class="col-12">
-                ¿No tienes una cuenta? <a href="registro.php">Registrate aquí</a>
+                <a href="login.php">Iniciar sesión</a>
             </div>
-
         </form>
+
     </main>
 
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
-        </script>
+    </script>
 
-
+    
 </body>
 
 </html>

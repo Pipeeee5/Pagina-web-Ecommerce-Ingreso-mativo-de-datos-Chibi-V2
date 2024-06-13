@@ -1,5 +1,3 @@
-<!-- Pantalla login -->
-
 <?php
 require 'config/config.php';
 require 'config/database.php';
@@ -10,21 +8,62 @@ $con = $db->conectar();
 
 $errors = [];
 
+//datos a solicitar en pagina, en este caso como email.
 if (!empty($_POST)) {
 
-    $usuario = trim($_POST['usuario']);
-    $password = trim($_POST['password']);
+    $email = trim($_POST['email']);
 
-
-    if (esNulo([$usuario, $password])) {
+    if (esNulo([$email])) {
         $errors[] = "Debe llenar todos los campos";
     }
 
+    if (!esEmail($email)) {
+        $errors[] = "La dirección de correo no es valida";
+    }
+
+    //con esta consulta se trae la informacion del cliente y usuario que se esta solicitando para cambiar su contraseña.
+// se selecciona el ID del usuario y los nombres del cliente asociado, donde apartir del correo electrónico 
+// nos pueda traer el ID del usuario.
+// Utilizamos (INNER JOIN) entre las tablas usuarios y clientes para llegar al correo del usuario.
+
     if (count($errors) == 0) {
-        $errors[] = login($usuario, $password, $con);
+        if (emailExiste($email, $con)) {
+            $sql = $con->prepare("SELECT usuarios.id, clientes.nombres FROM usuarios 
+            INNER JOIN clientes ON usuarios.id_cliente=clientes.id
+            WHERE clientes.email LIKE ? LIMIT 1");
+
+            $sql->execute([$email]);
+            $row = $sql->fetch(PDO::FETCH_ASSOC);
+            $user_id = $row['id'];
+            $nombres = $row['nombres'];
+
+            $token = solicitaPassword($user_id, $con);
+
+            //se crea correo
+            if ($token !== null) {
+                require 'clases/Mailer.php';
+                $mailer = new Mailer();
+
+                $url = SITE_URL . '/reset_password.php?id=' . $user_id . '&token=' . $token;
+
+                $asunto = "Recuperar password - Chibi Mania";
+                $cuerpo = "Estimado <b>$nombres</b>: <br> Si has solicitado el cambio de tu contraseña da click en el siguiente link.
+                 <a href='$url'>$url</a>";
+                $cuerpo .= "<br><br>Si no hiciste esta solicitud puedes ignorar este correo.";
+
+                if ($mailer->enviarEmail($email, $asunto, $cuerpo)) {
+                    echo "<p><b>Correo enviado:</b></p>";
+                    echo "<p>Hemos enviado un correo electronico a la direccion <b>$email</b> para restablecer la contraseña.</p>";
+                    echo "<p><br>Si usteded no visualiza el correo, por favor revisar bandeja de spam o en borradores.</p>";
+                    echo "<br><br>Pincha este link para volver a la pagina principal: <a href='index.php'>  <b>Página Principal</b></a>";
+                    exit;
+                }
+            }
+        } else {
+            $errors[] = "No existe una cuenta asociada a esta direccióm de Correo Electronico.";
+        }
     }
 }
-
 
 
 ?>
@@ -76,37 +115,26 @@ if (!empty($_POST)) {
 
 
     <main class="form-login m-auto pt-4">
-        <h2>Iniciar sesión</h2>
+        <h3>Recuperar contraseña</h3>
 
         <?php mostrarMensajes($errors); ?>
-        <form class="row g-3" action="login.php" method="post" autocomplete="off">
 
+        <form action="recuperar_pw.php" method="post" class="row g-3" autocomplete="off">
             <div class="form-floating">
-                <input class="form-control" type="text" name="usuario" id="usuario" placeholder="Usuario" required>
-                <label for="usuario">Usuario</label>
-            </div>
-
-            <div class="form-floating">
-                <input class="form-control" type="password" name="password" id="password" placeholder="Contraseña"
+                <input class="form-control" type="email" name="email" id="email" placeholder="Correo Electronico"
                     required>
-                <label for="password">Contraseña</label>
-            </div>
-
-            <div class="col-12">
-                <a href="recuperar_pw.php">¿Olvidaste tu contraseña?</a>
+                <label for="email">Correo Electronico</label>
             </div>
 
             <div class="d-grid gap-3 col-12">
-                <button typpe="submit" class="btn btn-primary">Ingresar</button>
+                <button typpe="submit" class="btn btn-primary">Continuar</button>
             </div>
-
-            <hr>
 
             <div class="col-12">
                 ¿No tienes una cuenta? <a href="registro.php">Registrate aquí</a>
             </div>
-
         </form>
+
     </main>
 
 

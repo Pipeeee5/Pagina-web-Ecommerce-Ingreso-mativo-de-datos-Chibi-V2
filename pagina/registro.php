@@ -57,16 +57,19 @@ if (!empty($_POST)) {
             if ($idUsuario > 0) {
 
                 $url = SITE_URL . '/activa_cliente.php?id=' . $idUsuario . '&token=' . $token;
+
                 $asunto = "Activar cuenta - Chibi Mania";
-                $cuerpo = "Estimado $nombres: <br> Para continuar con el proceso de registro es indespensable 
+                $cuerpo = "Estimado <b>$nombres</b>: <br> Para continuar con el proceso de registro es indespensable 
                 que active su cuenta porfavor de click en la siguiente liga
-                 <a href='$url'> Activar cuenta</a>";
+                 <a href='$url'> $url Activar cuenta</a>.";
 
 
                 if ($mailer->enviarEmail($email, $asunto, $cuerpo)) {
-                    echo "para terminar el proceso de registro siga las instrucciones que le hemos enviado
-                    al correo electronico: $email";
-
+                    echo "<p><b>Correo enviado:</b></p>";
+                    echo "Para terminar el proceso de registro siga las instrucciones que le hemos enviado
+                    al correo electronico: <b>$email</b>";
+                    echo "<p><br>Si usteded no visualiza el correo, por favor revisar bandeja de spam o en borradores.</p>";
+                    echo "<br><br>Pincha este link para volver a la pagina principal: <a href='index.php'>  <b>Página Principal</b></a>";
                     exit;
                 }
             } else {
@@ -116,7 +119,7 @@ if (!empty($_POST)) {
                             <a class="nav-link" href="#">Contacto</a>
                         </li>
                     </ul>
-                    <a href="checkout.php" class="btn btn-primary"><i class="fas fa-shopping-cart"></i> 
+                    <a href="checkout.php" class="btn btn-primary"><i class="fas fa-shopping-cart"></i>
                         Carrito<span id="num_cart" class="badge bg-secondary">
                             <?php echo $num_cart; ?>
                         </span>
@@ -185,16 +188,19 @@ if (!empty($_POST)) {
 
     <!-- script para peticion ajax -->
     <script>
+        //usuario
         let txtUsuario = document.getElementById('usuario')
         txtUsuario.addEventListener("blur", function () {
             existeUsuario(txtUsuario.value)
         }, false)
 
+        //email
         let txtEmail = document.getElementById('email')
         txtEmail.addEventListener("blur", function () {
             existeEmail(txtEmail.value)
         }, false)
 
+        //rut
         let txtRut = document.getElementById('rut')
         txtRut.addEventListener("blur", function () {
             existeRut(txtRut.value)

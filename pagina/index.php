@@ -51,7 +51,7 @@ $resultado = $sql->fetchAll(PDO::FETCH_ASSOC);
                             <?php echo $num_cart; ?>
                         </span>
                         
-                    <!-- validacion modo incognito -->
+                    <!-- validacion inicio sesion en modo incognito -->
                     <?php if(isset($_SESSION['user_id'])) { ?>
                         <a href="#" class="btn btn-success"><i class="fas fa-user"></i> <?php echo $_SESSION['user_name']; ?></a>
                        
