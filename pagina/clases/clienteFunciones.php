@@ -141,9 +141,11 @@ function ValidaToken($id, $token, $con)
             $msg ="Cuenta activada.";
         } else {
             $msg = "Error al activar cuenta.";
+            
         }
     } else {
-        $msg = "No existe el registro del cliente.";
+        $msg = "No existe el registro del cliente.<br> Pincha este link para volver a la pagina principal: <a href='index.php'>  <b>Página Principal</b></a>";
+        
     }
     return $msg;
 }

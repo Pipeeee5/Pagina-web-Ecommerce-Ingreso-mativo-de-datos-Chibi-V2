@@ -61,7 +61,7 @@ if (!empty($_POST)) {
                 $asunto = "Activar cuenta - Chibi Mania";
                 $cuerpo = "Estimado <b>$nombres</b>: <br> Para continuar con el proceso de registro es indespensable 
                 que active su cuenta porfavor de click en la siguiente liga
-                 <a href='$url'> $url Activar cuenta</a>.";
+                 <a href='$url'> Activar cuenta</a>.";
 
 
                 if ($mailer->enviarEmail($email, $asunto, $cuerpo)) {
