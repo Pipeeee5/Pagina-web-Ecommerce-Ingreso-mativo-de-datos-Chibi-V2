@@ -27,44 +27,7 @@ $resultado = $sql->fetchAll(PDO::FETCH_ASSOC);
 </head>
 
 <body>
-    <header>
-        <div class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <div class="container">
-                <a href="index.php" class="navbar-brand">
-                    <strong>ChibiMania</strong>
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
-                    aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarCollapse">
-                    <ul class="navbar-nav me-auto mb-2 mb-md-0">
-                        <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="#">Catalogo</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Contacto</a>
-                        </li>
-                    </ul>
-                    <a href="checkout.php" class="btn btn-primary me-2"><i class="fas fa-shopping-cart"></i> 
-                        Carrito<span id="num_cart" class="badge bg-secondary">
-                            <?php echo $num_cart; ?>
-                        </span>
-                        
-                    <!-- validacion inicio sesion en modo incognito -->
-                    <?php if(isset($_SESSION['user_id'])) { ?>
-                        <a href="#" class="btn btn-success"><i class="fas fa-user"></i> <?php echo $_SESSION['user_name']; ?></a>
-                       
-                    <?php } else { ?>
-                        <a href="login.php" class="btn btn-success"><i class="fas fa-user"></i>Ingresar </a>
-
-                    <?php } ?>
-                    
-
-                </div>
-            </div>
-        </div>
-    </header>
+<?php include 'menu.php';?>
 
     <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">

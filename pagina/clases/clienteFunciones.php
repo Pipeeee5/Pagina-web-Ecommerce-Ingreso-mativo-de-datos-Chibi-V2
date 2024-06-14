@@ -154,15 +154,20 @@ function activarUsuario($id, $con){
 
 }
 
-function login($usuario, $password, $con){
-    $sql = $con->prepare("SELECT id, usuario, password FROM usuarios WHERE usuario LIKE ? LIMIT 1");
+function login($usuario, $password, $con, $proceso){
+    $sql = $con->prepare("SELECT id, usuario, password, id_cliente FROM usuarios WHERE usuario LIKE ? LIMIT 1");
     $sql->execute([$usuario]);
     if($row = $sql->fetch(PDO::FETCH_ASSOC)){
         if(esActivaCuenta($usuario, $con)){
             if(password_verify($password, $row['password'])){
                 $_SESSION['user_id'] = $row['id'];
                 $_SESSION['user_name'] = $row['usuario'];
+                $_SESSION['user_cliente'] = $row['id_cliente'];
+                if ($proceso == 'pago'){
+                header("Location: checkout.php");
+                }else{
                 header("Location: index.php");
+                }
                 exit;
             }
         } else {
