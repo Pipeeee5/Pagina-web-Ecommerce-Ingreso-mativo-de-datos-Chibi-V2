@@ -48,10 +48,6 @@ main>.container {
   height: auto;
 }
 
-.card {
-  width: 250px; /* Ajusta este valor al tamaño que desees */
-}
-
 .ml-auto {
   margin-left: 30px;
 }

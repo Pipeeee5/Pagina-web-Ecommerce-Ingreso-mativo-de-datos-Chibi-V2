@@ -23,7 +23,7 @@ if(is_array($datos)){
     $email = $row_cliente['email'];
     $id_cliente = $_SESSION['user_cliente'];
 
-    $sql = $con->prepare("INSERT INTO compra (id_transaccion, fecha, status, email, id_cliente, total, medio_pago) VALUES (?,?,?,?,?,?,?) ");
+    $sql = $con->prepare("INSERT INTO compra (id_transaccion, fecha, status, email, id_cliente, total, medio_de_pago) VALUES (?,?,?,?,?,?,?) ");
     $sql->execute([$id_transaccion, $fecha_nueva, $status, $email, $id_cliente, $total, 'paypal']);
     $id = $con->lastInsertId();
 

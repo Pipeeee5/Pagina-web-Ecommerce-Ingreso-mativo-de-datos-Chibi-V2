@@ -47,7 +47,7 @@ if($id_transaccion == '') {
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-    <?php include 'menu.php';?>
+<?php include 'menu.php';?>
     <main>
         <div class="container">
             <?php if(strlen($error) > 0) {?>
