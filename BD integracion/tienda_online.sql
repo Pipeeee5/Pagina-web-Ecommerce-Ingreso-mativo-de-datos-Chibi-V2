@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 24-05-2024 a las 20:46:28
+-- Tiempo de generación: 16-06-2024 a las 00:15:47
 -- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.0.30
+-- Versión de PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -45,7 +45,8 @@ CREATE TABLE `clientes` (
 --
 
 INSERT INTO `clientes` (`id`, `nombres`, `apellidos`, `email`, `telefono`, `rut`, `estatus`, `fecha_alta`, `fecha_modifica`, `fecha_baja`) VALUES
-(1, 'Felipe', 'Aravena', 'pipefelipesoto@hotmail.com', '944848058', '20886965-5', 1, '2024-05-24 14:42:13', NULL, NULL);
+(1, 'Felipe', 'Aravena', 'pipefelipesoto@hotmail.com', '944848058', '20886965-5', 1, '2024-05-24 14:42:13', NULL, NULL),
+(11, 'feli', 'tapia', 'xly1536@gmail.com', '232323', '211264608', 1, '2024-06-15 17:55:26', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -60,7 +61,8 @@ CREATE TABLE `compra` (
   `status` varchar(20) NOT NULL,
   `email` varchar(50) NOT NULL,
   `id_cliente` varchar(20) NOT NULL,
-  `total` decimal(10,2) NOT NULL
+  `total` decimal(10,2) NOT NULL,
+  `medio_de_pago` varchar(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
@@ -91,7 +93,7 @@ CREATE TABLE `productos` (
   `precio` decimal(10,2) NOT NULL,
   `descuento` tinyint(3) NOT NULL DEFAULT 0,
   `id_categoria` int(11) NOT NULL,
-  `activo` TINYINT(1) NOT NULL DEFAULT 1
+  `activo` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
@@ -104,8 +106,8 @@ INSERT INTO `productos` (`id`, `nombre`, `descripcion`, `precio`, `descuento`, `
 (3, 'Dragon Ball super Volumen 1.', 'Dragon Ball super Volumen 1.', 35.00, 0, 1, 1),
 (4, 'Kimetsu No Yaiba Volumen 1.', 'Kimetsu No Yaiba Volumen 1.', 20.00, 0, 1, 1),
 (5, 'Boku No Kokoro vol 1.', 'Boko No Kokoro vol1.\r\nIchikawa Kyotaro es un joven tímido en el escalafón final de los grupos sociales del instituto, pero cree que protagoniza un tortuoso thriller psicológico en su vida diaria. Se pasa los días pensando en como interrumpir las apacibles vidas de sus compañeros y en cortejar a Anna Yamada, la idol de la clase.', 20.00, 5, 1, 1),
-(6, 'Shingeki No Kyojin Volumen 1.', 'Shingeki no Kyojin (進撃の巨人? «Titán de ataque»), también conocida en países de habla hispana como Ataque a los titanes y Ataque de los titanes,2​n. 2​ es una serie de manga japonesa escrita e ilustrada por Hajime Isayama. El manga se publicó en septiembre de 2009 en la revista Bessatsu Shōnen Magazine de la editorial Kōdansha y fue difundida de forma mensual hasta abril de 2021 con un total de 139 capítulos. Su historia terminó después de casi doce años. En España, el manga es distribuido por Norma Editorial y en Hispanoamérica por la editorial Panini; salvo en Argentina, donde la encargada es la editorial Ovni Press.', 30.00, 0, 1, 1);
-
+(6, 'Shingeki No Kyojin Volumen 1.', 'Shingeki no Kyojin (進撃の巨人? «Titán de ataque»), también conocida en países de habla hispana como Ataque a los titanes y Ataque de los titanes,2​n. 2​ es una serie de manga japonesa escrita e ilustrada por Hajime Isayama. El manga se publicó en septiembre de 2009 en la revista Bessatsu Shōnen Magazine de la editorial Kōdansha y fue difundida de forma mensual hasta abril de 2021 con un total de 139 capítulos. Su historia terminó después de casi doce años. En España, el manga es distribuido por Norma Editorial y en Hispanoamérica por la editorial Panini; salvo en Argentina, donde la encargada es la editorial Ovni Press.', 30.00, 0, 1, 1),
+(33, 'Producto de ejemplooooooooooooooooooooooooooooooooooooo', '', 1.00, 0, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -129,7 +131,8 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `usuario`, `password`, `activacion`, `token`, `token_password`, `password_request`, `id_cliente`) VALUES
-(1, 'ChubiLanes', '$2y$10$5hOCbs5aMlvIOeKskuXfAu5xnIVM8hufafo8Qf7.FgAMziukXXo0a', 0, 'de19f05968fff494ab7ca36f899edab5', NULL, 0, 1);
+(1, 'ChubiLanes', '$2y$10$5hOCbs5aMlvIOeKskuXfAu5xnIVM8hufafo8Qf7.FgAMziukXXo0a', 0, 'de19f05968fff494ab7ca36f899edab5', NULL, 0, 1),
+(11, 'pipex2', '$2y$10$PrKozPaSFi8tm0pJtqNs9OGJUEFTwqhHXvoBPOg4O1kFgr5O1el5m', 1, '', '', 0, 11);
 
 --
 -- Índices para tablas volcadas
@@ -174,31 +177,31 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `clientes`
 --
 ALTER TABLE `clientes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `compra`
 --
 ALTER TABLE `compra`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `detalle_compra`
 --
 ALTER TABLE `detalle_compra`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `productos`
 --
 ALTER TABLE `productos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

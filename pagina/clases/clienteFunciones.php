@@ -138,7 +138,7 @@ function ValidaToken($id, $token, $con)
     $sql->execute([$id, $token]);
     if ($sql->fetchColumn() > 0) {
         if(activarUsuario($id, $con)){
-            $msg ="Cuenta activada.";
+            $msg ="Cuenta activada.<br> Pincha este link para volver a la pagina principal: <a href='index.php'>  <b>Página Principal</b></a>";
         } else {
             $msg = "Error al activar cuenta.";
             
