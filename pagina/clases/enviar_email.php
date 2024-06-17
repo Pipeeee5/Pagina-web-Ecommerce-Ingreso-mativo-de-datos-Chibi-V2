@@ -33,7 +33,7 @@ try {
     $cuerpo = '<h4> Gracias por su compra </h4>';
     $cuerpo .='<p>El ID de su compra es <b>'. $id_transaccion .'</b></p>';
 
-    $mail->Body    = utf8_decode($cuerpo);
+    $mail->Body = mb_convert_encoding($cuerpo, 'ISO-8859-1', 'UTF-8');
     $mail->AltBody = 'Le enviamos los detalles de su compra';
 
     $mail->setLanguage('es','../phpmailer/language/phpmailer.lang-es');
