@@ -1,3 +1,7 @@
+
+<!-- Clientes funciones -->
+
+
 <?php
 
 // validaciones en backend
