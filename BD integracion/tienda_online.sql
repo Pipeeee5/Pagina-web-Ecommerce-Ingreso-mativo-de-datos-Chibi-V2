@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 16-06-2024 a las 00:15:47
+-- Tiempo de generación: 18-06-2024 a las 17:52:35
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -20,6 +20,31 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `tienda_online`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `admin`
+--
+
+CREATE TABLE `admin` (
+  `id` int(11) NOT NULL,
+  `usuario` varchar(30) NOT NULL,
+  `password` varchar(120) NOT NULL,
+  `nombre` varchar(100) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `token_password` varchar(40) DEFAULT NULL,
+  `password_request` tinyint(4) NOT NULL DEFAULT 0,
+  `activo` tinyint(4) NOT NULL,
+  `fecha_alta` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `admin`
+--
+
+INSERT INTO `admin` (`id`, `usuario`, `password`, `nombre`, `email`, `token_password`, `password_request`, `activo`, `fecha_alta`) VALUES
+(1, 'admin', '$2y$10$Nb4KxYly.es3ho5RywY95efm5R3PvTqkUDwFNWQTNF/RXJQX84hja', 'Administrador', 'varulv1243@gmail.com', NULL, 0, 1, '2024-06-17 22:09:57');
 
 -- --------------------------------------------------------
 
@@ -46,7 +71,7 @@ CREATE TABLE `clientes` (
 
 INSERT INTO `clientes` (`id`, `nombres`, `apellidos`, `email`, `telefono`, `rut`, `estatus`, `fecha_alta`, `fecha_modifica`, `fecha_baja`) VALUES
 (1, 'Felipe', 'Aravena', 'pipefelipesoto@hotmail.com', '944848058', '20886965-5', 1, '2024-05-24 14:42:13', NULL, NULL),
-(11, 'feli', 'tapia', 'xly1536@gmail.com', '232323', '211264608', 1, '2024-06-15 17:55:26', NULL, NULL);
+(13, 'felipe', 'tapia', 'xly1536@gmail.com', '322323', '21126408', 1, '2024-06-17 19:49:50', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -65,6 +90,13 @@ CREATE TABLE `compra` (
   `medio_de_pago` varchar(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+--
+-- Volcado de datos para la tabla `compra`
+--
+
+INSERT INTO `compra` (`id`, `id_transaccion`, `fecha`, `status`, `email`, `id_cliente`, `total`, `medio_de_pago`) VALUES
+(6, '90J04585P9647133X', '2024-06-18 01:52:25', 'COMPLETED', 'xly1536@gmail.com', '13', 130.00, 'paypal');
+
 -- --------------------------------------------------------
 
 --
@@ -79,6 +111,18 @@ CREATE TABLE `detalle_compra` (
   `precio` decimal(10,2) NOT NULL,
   `cantidad` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `detalle_compra`
+--
+
+INSERT INTO `detalle_compra` (`id`, `id_compra`, `id_producto`, `nombre`, `precio`, `cantidad`) VALUES
+(14, 5, 2, 'Jujutsu Volumen 1.', 30.00, 2),
+(15, 5, 3, 'Dragon Ball super Volumen 1.', 35.00, 2),
+(16, 5, 5, 'Boku No Kokoro vol 1.', 19.00, 2),
+(17, 5, 6, 'Shingeki No Kyojin Volumen 1.', 30.00, 2),
+(18, 6, 2, 'Jujutsu Volumen 1.', 30.00, 2),
+(19, 6, 3, 'Dragon Ball super Volumen 1.', 35.00, 2);
 
 -- --------------------------------------------------------
 
@@ -132,11 +176,17 @@ CREATE TABLE `usuarios` (
 
 INSERT INTO `usuarios` (`id`, `usuario`, `password`, `activacion`, `token`, `token_password`, `password_request`, `id_cliente`) VALUES
 (1, 'ChubiLanes', '$2y$10$5hOCbs5aMlvIOeKskuXfAu5xnIVM8hufafo8Qf7.FgAMziukXXo0a', 0, 'de19f05968fff494ab7ca36f899edab5', NULL, 0, 1),
-(11, 'pipex2', '$2y$10$PrKozPaSFi8tm0pJtqNs9OGJUEFTwqhHXvoBPOg4O1kFgr5O1el5m', 1, '', '', 0, 11);
+(13, 'pipex2', '$2y$10$GL.IINCqnFIM4eOaAvB1p.iwipOWL6luIu4yMQm89z/QSLIZPn/w.', 1, '', NULL, 0, 13);
 
 --
 -- Índices para tablas volcadas
 --
+
+--
+-- Indices de la tabla `admin`
+--
+ALTER TABLE `admin`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `clientes`
@@ -174,22 +224,28 @@ ALTER TABLE `usuarios`
 --
 
 --
+-- AUTO_INCREMENT de la tabla `admin`
+--
+ALTER TABLE `admin`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT de la tabla `clientes`
 --
 ALTER TABLE `clientes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `compra`
 --
 ALTER TABLE `compra`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `detalle_compra`
 --
 ALTER TABLE `detalle_compra`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT de la tabla `productos`
@@ -201,7 +257,7 @@ ALTER TABLE `productos`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
