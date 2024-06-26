@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 18-06-2024 a las 17:52:35
+-- Tiempo de generación: 26-06-2024 a las 02:03:31
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -127,6 +127,24 @@ INSERT INTO `detalle_compra` (`id`, `id_compra`, `id_producto`, `nombre`, `preci
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `empleados`
+--
+
+CREATE TABLE `empleados` (
+  `id` int(11) NOT NULL,
+  `nombre` varchar(100) NOT NULL,
+  `apellido` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `telefono` bigint(20) DEFAULT NULL,
+  `fecha_nacimiento` date DEFAULT NULL,
+  `fecha_contratacion` date DEFAULT NULL,
+  `puesto` varchar(50) DEFAULT NULL,
+  `salario` decimal(10,2) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `productos`
 --
 
@@ -152,6 +170,21 @@ INSERT INTO `productos` (`id`, `nombre`, `descripcion`, `precio`, `descuento`, `
 (5, 'Boku No Kokoro vol 1.', 'Boko No Kokoro vol1.\r\nIchikawa Kyotaro es un joven tímido en el escalafón final de los grupos sociales del instituto, pero cree que protagoniza un tortuoso thriller psicológico en su vida diaria. Se pasa los días pensando en como interrumpir las apacibles vidas de sus compañeros y en cortejar a Anna Yamada, la idol de la clase.', 20.00, 5, 1, 1),
 (6, 'Shingeki No Kyojin Volumen 1.', 'Shingeki no Kyojin (進撃の巨人? «Titán de ataque»), también conocida en países de habla hispana como Ataque a los titanes y Ataque de los titanes,2​n. 2​ es una serie de manga japonesa escrita e ilustrada por Hajime Isayama. El manga se publicó en septiembre de 2009 en la revista Bessatsu Shōnen Magazine de la editorial Kōdansha y fue difundida de forma mensual hasta abril de 2021 con un total de 139 capítulos. Su historia terminó después de casi doce años. En España, el manga es distribuido por Norma Editorial y en Hispanoamérica por la editorial Panini; salvo en Argentina, donde la encargada es la editorial Ovni Press.', 30.00, 0, 1, 1),
 (33, 'Producto de ejemplooooooooooooooooooooooooooooooooooooo', '', 1.00, 0, 0, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `sucursales`
+--
+
+CREATE TABLE `sucursales` (
+  `id` int(11) NOT NULL,
+  `nombre_sucursal` varchar(100) NOT NULL,
+  `ciudad` varchar(100) NOT NULL,
+  `comuna` varchar(100) NOT NULL,
+  `direccion` varchar(255) NOT NULL,
+  `telefono` bigint(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 -- --------------------------------------------------------
 
@@ -207,9 +240,21 @@ ALTER TABLE `detalle_compra`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `empleados`
+--
+ALTER TABLE `empleados`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `productos`
 --
 ALTER TABLE `productos`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `sucursales`
+--
+ALTER TABLE `sucursales`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -248,10 +293,22 @@ ALTER TABLE `detalle_compra`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
+-- AUTO_INCREMENT de la tabla `empleados`
+--
+ALTER TABLE `empleados`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `productos`
 --
 ALTER TABLE `productos`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+
+--
+-- AUTO_INCREMENT de la tabla `sucursales`
+--
+ALTER TABLE `sucursales`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
