@@ -108,7 +108,7 @@ $resultado = $sql->fetchAll(PDO::FETCH_ASSOC);
 <script>
     $(document).ready(function () {
         $.ajax({
-            url: 'productos_json.php',
+            url: '../pagina/insert_datos/productos_json.php',
             method: 'GET',
             dataType: 'json',
             success: function (data) {
